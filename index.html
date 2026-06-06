@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Art & Craft Carnival – Poster Maker</title>
+  <meta name="description" content="Personalise your Art & Craft Carnival poster – upload your artwork and artist photo, add your Instagram handle, and download your custom poster." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Cropper.js CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+</head>
+<body>
+  <!-- ── Page background ── -->
+  <div class="page-bg"></div>
+
+  <!-- ── App Shell ── -->
+  <div class="app">
+
+    <!-- Main layout -->
+    <main class="main">
+
+      <!-- ── Canvas Preview ── -->
+      <section class="preview-section">
+        <div class="canvas-container">
+          <div class="canvas-wrap" id="canvasWrap">
+            <canvas id="posterCanvas"></canvas>
+
+            <!-- Clickable hot-zones overlaid on the canvas preview -->
+            <div class="hotzone" id="hotzoneArt" title="Click to upload artwork"></div>
+            <div class="hotzone" id="hotzoneArtist" title="Click to upload your photo"></div>
+            <div class="hotzone hotzone-insta" id="hotzoneInsta" title="Click to enter Instagram ID"></div>
+          </div>
+        </div>
+
+        <!-- Hidden File Inputs -->
+        <input type="file" id="artUpload" accept="image/*" hidden />
+        <input type="file" id="artistUpload" accept="image/*" hidden />
+
+        <!-- Download Section -->
+        <div class="download-container">
+          <button class="download-btn" id="downloadBtn">
+            <span class="dl-icon">⬇</span> Download Poster
+          </button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ── Cropper Modal ── -->
+  <div class="crop-modal" id="cropModal" style="display: none;">
+    <div class="crop-modal-content">
+      <h3 class="crop-modal-title">Crop Image</h3>
+      <div class="crop-area">
+        <img id="cropImage" src="" alt="Image to crop" />
+      </div>
+      <div class="crop-actions">
+        <button class="crop-btn cancel" id="cropCancelBtn">Cancel</button>
+        <button class="crop-btn save" id="cropSaveBtn">Crop &amp; Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Instagram Handle Modal ── -->
+  <div class="crop-modal" id="instaModal" style="display: none;">
+    <div class="crop-modal-content" style="max-width: 400px;">
+      <h3 class="crop-modal-title">Enter Instagram Handle</h3>
+      <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 0.8rem;">
+        <p style="font-size: 0.8rem; color: var(--muted); line-height: 1.4;">
+          Your handle will be rendered on the poster next to the Instagram icon.
+        </p>
+        <div class="insta-input-wrap" style="background: var(--surface2); border: 1.5px solid rgba(255,255,255,0.15); border-radius: 10px; overflow: hidden; display: flex; align-items: center; width: 100%;">
+          <span class="insta-at" style="padding: 0 0.7rem; font-weight: 700; font-size: 1rem; color: var(--accent); user-select: none;">@</span>
+          <input
+            type="text"
+            id="modalInstaInput"
+            class="insta-input"
+            placeholder="yourusername"
+            maxlength="30"
+            autocomplete="off"
+            style="flex: 1; padding: 0.72rem 0.8rem 0.72rem 0; background: transparent; border: none; outline: none; font-family: inherit; font-size: 0.9rem; color: var(--text);"
+          />
+        </div>
+      </div>
+      <div class="crop-actions">
+        <button class="crop-btn cancel" id="instaCancelBtn">Cancel</button>
+        <button class="crop-btn save" id="instaSaveBtn">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

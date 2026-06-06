@@ -1,0 +1,12 @@
+{
+  "name": "art-carnival-poster-maker",
+  "version": "1.0.0",
+  "description": "Art & Craft Carnival personalised poster maker",
+  "scripts": {
+    "start": "npx --yes http-server . -p 3000 -o --cors -c-1",
+    "dev": "npx --yes live-server --port=3000 --open=/"
+  },
+  "keywords": ["poster", "art", "carnival"],
+  "author": "Vamsh",
+  "license": "MIT"
+}
