@@ -211,12 +211,12 @@ function drawInstagramSection() {
   if (handle) {
     ctx.fillStyle = '#ff1a1a'; // Brighter red text color
     ctx.font = 'bold 24px Inter, sans-serif';
-    ctx.fillText('@' + handle, textX, textY);
+    ctx.fillText(handle, textX, textY);
   } else {
     // Semi-transparent placeholder when empty (brighter red)
     ctx.fillStyle = 'rgba(255, 26, 26, 0.5)';
     ctx.font = 'bold 24px Inter, sans-serif';
-    ctx.fillText('@yourhandle', textX, textY);
+    ctx.fillText('yourhandle', textX, textY);
   }
 
   ctx.restore();
