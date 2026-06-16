@@ -16,9 +16,9 @@ const CANVAS_H = 1350;
 
 /* ── Zone definitions (exact template image coordinates) ── */
 const ZONES = {
-  art:    { x: 50,  y: 744, w: 380, h: 360 },
-  artist: { x: 490, y: 744, w: 380, h: 360 },
-  insta:  { x: 510, y: 700, w: 270, h: 35  }
+  art:    { x: 45,  y: 730, w: 383, h: 379 },
+  artist: { x: 513, y: 709, w: 383, h: 379 },
+  insta:  { x: 900, y: 710, w: 50,  h: 380 }
 };
 
 /* ── State ── */
@@ -169,54 +169,31 @@ function drawPlaceholder(zone, label) {
    Placed above the artist photo (as in the reference image)
 ───────────────────────────────────────────────── */
 function drawInstagramSection() {
-  const z = ZONES.insta;
   const handle = state.instaHandle;
-
-  // Icon dimensions
-  const iconSize = 26;
-  const iconX = z.x;
-  const iconY = z.y + (z.h - iconSize) / 2;
 
   ctx.save();
 
-  // 1. Draw Instagram icon (black outline)
-  ctx.strokeStyle = '#000000';
-  ctx.lineWidth = 2.4;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
+  // Draw Instagram handle text rotated 90 degrees clockwise.
+  // Center of Instagram icon is x = 927.
+  // We'll align the text center line to x = 927, and start writing down from y = 765.
+  const textX = 927;
+  const textY = 765;
 
-  // Outer rounded square
-  ctx.beginPath();
-  ctx.roundRect(iconX, iconY, iconSize, iconSize, iconSize * 0.22);
-  ctx.stroke();
-
-  // Inner camera lens circle
-  ctx.beginPath();
-  ctx.arc(iconX + iconSize/2, iconY + iconSize/2, iconSize * 0.23, 0, Math.PI * 2);
-  ctx.stroke();
-
-  // Camera flash dot
-  ctx.fillStyle = '#000000';
-  ctx.beginPath();
-  ctx.arc(iconX + iconSize * 0.74, iconY + iconSize * 0.26, 1.8, 0, Math.PI * 2);
-  ctx.fill();
-
-  // 2. Draw Instagram handle text
-  const textX = iconX + iconSize + 10; // 10px gap
-  const textY = z.y + z.h / 2 + 1; // alignment adjustment
+  ctx.translate(textX, textY);
+  ctx.rotate(Math.PI / 2); // 90 degrees clockwise rotation
 
   ctx.textAlign = 'left';
   ctx.textBaseline = 'middle';
 
   if (handle) {
-    ctx.fillStyle = '#ff1a1a'; // Brighter red text color
+    ctx.fillStyle = '#000000'; // Match the black instagram icon outline
     ctx.font = 'bold 24px Inter, sans-serif';
-    ctx.fillText(handle, textX, textY);
+    ctx.fillText('@' + handle, 0, 0);
   } else {
-    // Semi-transparent placeholder when empty (brighter red)
-    ctx.fillStyle = 'rgba(255, 26, 26, 0.5)';
+    // Semi-transparent placeholder when empty
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
     ctx.font = 'bold 24px Inter, sans-serif';
-    ctx.fillText('yourhandle', textX, textY);
+    ctx.fillText('@yourusername', 0, 0);
   }
 
   ctx.restore();
@@ -259,11 +236,7 @@ function render() {
     ctx.drawImage(state.templateOverlay, 0, 0, CANVAS_W, CANVAS_H);
   }
 
-  /* Cover up the old template Instagram icon on the far right */
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(995, 502, 50, 48);
-
-  /* 4. Draw Instagram logo & handle text */
+  /* Draw Instagram logo & handle text */
   drawInstagramSection();
 }
 
@@ -308,7 +281,7 @@ function openCropModal(src, target) {
 
   // Initialize Cropper.js
   cropper = new Cropper(cropImage, {
-    aspectRatio: 380 / 360, // locked to the 380x360px square container aspect ratio
+    aspectRatio: 383 / 379, // locked to the 383x379px container aspect ratio
     viewMode: 1, // Keep crop box within image boundary
     dragMode: 'move',
     autoCropArea: 1,
@@ -338,10 +311,10 @@ cropCancelBtn.addEventListener('click', closeCropModal);
 cropSaveBtn.addEventListener('click', () => {
   if (!cropper) return;
 
-  // Get cropped canvas exactly matched to square sizes: 380x360 px
+  // Get cropped canvas exactly matched to square sizes: 383x379 px
   const croppedCanvas = cropper.getCroppedCanvas({
-    width: 380,
-    height: 360
+    width: 383,
+    height: 379
   });
 
   if (croppedCanvas) {
