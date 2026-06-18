@@ -188,12 +188,12 @@ function drawInstagramSection() {
   if (handle) {
     ctx.fillStyle = '#000000'; // Match the black instagram icon outline
     ctx.font = 'bold 24px Inter, sans-serif';
-    ctx.fillText('@' + handle, 0, 0);
+    ctx.fillText(handle, 0, 0);
   } else {
     // Semi-transparent placeholder when empty
     ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
     ctx.font = 'bold 24px Inter, sans-serif';
-    ctx.fillText('@yourusername', 0, 0);
+    ctx.fillText('yourusername', 0, 0);
   }
 
   ctx.restore();
