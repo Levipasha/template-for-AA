@@ -16,9 +16,9 @@ const CANVAS_H = 1350;
 
 /* ── Zone definitions (exact template image coordinates) ── */
 const ZONES = {
-  art:    { x: 45,  y: 730, w: 383, h: 379 },
-  artist: { x: 513, y: 709, w: 383, h: 379 },
-  insta:  { x: 900, y: 710, w: 50,  h: 380 }
+  art:    { x: 69,  y: 736, w: 381, h: 378 },
+  artist: { x: 524, y: 736, w: 382, h: 378 },
+  insta:  { x: 906, y: 735, w: 50,  h: 380 }
 };
 
 /* ── State ── */
@@ -65,7 +65,7 @@ function loadTemplates() {
     orig.onload = () => { state.templateOverlay = orig; render(); positionHotzones(); };
     orig.src = 'template.png';
   };
-  overlay.src = 'template_overlay.png';
+  overlay.src = 'template_overlay_new_user.png';
 }
 
 /* ─────────────────────────────────────────────────
@@ -176,8 +176,8 @@ function drawInstagramSection() {
   // Draw Instagram handle text rotated 90 degrees clockwise.
   // Center of Instagram icon is x = 927.
   // We'll align the text center line to x = 927, and start writing down from y = 765.
-  const textX = 927;
-  const textY = 765;
+  const textX = 937;
+  const textY = 785;
 
   ctx.translate(textX, textY);
   ctx.rotate(Math.PI / 2); // 90 degrees clockwise rotation
@@ -280,8 +280,9 @@ function openCropModal(src, target) {
   }
 
   // Initialize Cropper.js
+  const ratio = target === 'art' ? (381 / 378) : (382 / 378);
   cropper = new Cropper(cropImage, {
-    aspectRatio: 383 / 379, // locked to the 383x379px container aspect ratio
+    aspectRatio: ratio, // locked to the specific container aspect ratio
     viewMode: 1, // Keep crop box within image boundary
     dragMode: 'move',
     autoCropArea: 1,
@@ -311,10 +312,12 @@ cropCancelBtn.addEventListener('click', closeCropModal);
 cropSaveBtn.addEventListener('click', () => {
   if (!cropper) return;
 
-  // Get cropped canvas exactly matched to square sizes: 383x379 px
+  // Get cropped canvas exactly matched to square sizes
+  const cropW = currentCropTarget === 'art' ? 381 : 382;
+  const cropH = 378;
   const croppedCanvas = cropper.getCroppedCanvas({
-    width: 383,
-    height: 379
+    width: cropW,
+    height: cropH
   });
 
   if (croppedCanvas) {
